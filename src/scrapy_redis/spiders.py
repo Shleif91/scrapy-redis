@@ -157,6 +157,7 @@ class RedisMixin(object):
         If `url` is empty, return []. So you should verify the `url` in the data.
         If `method` is empty, the request object will set method to 'GET', optional.
         If `meta` is empty, the request object will set `meta` to {}, optional.
+        If `cookies` is empty, the request object will set `cookies` to None, optional.
 
         This json supported data can be accessed from 'scrapy.spider' through response.
         'request.url', 'request.meta', 'request.cookies', 'request.method'
@@ -183,8 +184,9 @@ class RedisMixin(object):
         url = parameter.pop("url")
         method = parameter.pop("method").upper() if "method" in parameter else "GET"
         metadata = parameter.pop("meta") if "meta" in parameter else {}
+        cookies = parameter.pop("cookies") if "cookies" in parameter else None
 
-        return FormRequest(url, dont_filter=True, method=method, formdata=parameter, meta=metadata)
+        return FormRequest(url, dont_filter=True, method=method, formdata=parameter, meta=metadata, cookies=cookies)
 
     def schedule_next_requests(self):
         """Schedules a request if available"""
